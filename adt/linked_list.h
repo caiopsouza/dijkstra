@@ -17,8 +17,14 @@ struct LinkedListData {
     LinkedListNode last;
 };
 
+typedef struct {
+    size_t index;
+    unsigned int cost;
+} ListNode;
+
 struct LinkedListNodeData {
-    int data;
+    size_t index;
+    unsigned int cost;
     LinkedListNode next;
 };
 
@@ -28,6 +34,8 @@ size_t LL_len(LinkedListRO self);
 
 void LL_delete(LinkedList *list);
 
-void LL_append(LinkedList self, int data);
+void LL_append(LinkedList self, size_t index, unsigned int cost);
+
+void LL_to_array(LinkedList self, ListNode *array);
 
 #endif //DIJKSTRA_LINKED_LIST_H
