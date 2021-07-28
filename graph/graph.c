@@ -2,12 +2,12 @@
 #include <malloc.h>
 #include "graph.h"
 
-Graph GRAPH_new(size_t arcs) {
-    Graph res = malloc(sizeof(GraphData) + arcs * sizeof(LinkedList));
-    res->arcs = arcs;
+Graph GRAPH_new(size_t vertices) {
+    Graph res = malloc(sizeof(GraphData) + vertices * sizeof(LinkedList));
+    res->vertices = vertices;
     res->first = 0;
 
-    for (size_t i = 0; i < arcs; i++)
+    for (size_t i = 0; i < vertices; i++)
         res->adjacency[i] = LL_new();
 
     return res;
@@ -22,8 +22,7 @@ Graph GRAPH_parse(char *filename) {
     fscanf(file, "NB_ARCS%zu\n", &arcs);
     fscanf(file, "LIST_OF_ARCS COSTS\n");
 
-    Graph res = GRAPH_new(arcs);
-    res->nodes = nodes;
+    Graph res = GRAPH_new(nodes);
 
     // Body
     for (size_t i = 0; i < arcs; i++) {
@@ -44,10 +43,19 @@ Graph GRAPH_parse(char *filename) {
     return res;
 }
 
+void GRAPH_remove_vertex(Graph self, size_t vertex) {
+    free(self->adjacency[vertex]);
+    self->adjacency[vertex] = LL_new();
+
+    for (size_t i = 0; i < self->vertices; i++) {
+        LL_remove_vertex(self->adjacency[i], vertex);
+    }
+}
+
 void GRAPH_delete(Graph *self) {
     Graph graph = *self;
 
-    for (size_t i = 0; i < graph->arcs; i++)
+    for (size_t i = 0; i < graph->vertices; i++)
         LL_delete(&graph->adjacency[i]);
 
     free(graph);

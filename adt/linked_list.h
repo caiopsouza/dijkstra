@@ -2,6 +2,7 @@
 #define DIJKSTRA_LINKED_LIST_H
 
 #include <stdbool.h>
+#include <stddef.h>
 
 typedef struct LinkedListData *LinkedList;
 typedef const struct LinkedListData *LinkedListRO;

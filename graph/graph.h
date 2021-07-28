@@ -4,15 +4,16 @@
 #include "../adt/linked_list.h"
 
 typedef struct {
-    size_t nodes;
-    size_t arcs;
+    size_t vertices;
     size_t first;
     LinkedList adjacency[];
 } GraphData, *Graph;
 
-Graph GRAPH_new(size_t size);
+Graph GRAPH_new(size_t vertices);
 
 Graph GRAPH_parse(char *filename);
+
+void GRAPH_remove_vertex(Graph self, size_t vertex);
 
 void GRAPH_delete(Graph *self);
 

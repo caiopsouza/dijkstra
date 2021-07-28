@@ -1,14 +1,19 @@
 #include "cheat.h"
 #include "../graph/graph.h"
 
+#define GRAPH_PARSE_CHECK(adj, expected) \
+i = 0; \
+for (LL_foreach(adj, actual)) { \
+    cheat_assert(actual->vertex == expected[i].vertex); \
+    cheat_assert(actual->cost == expected[i].cost); \
+    i++; \
+}
+
 CHEAT_TEST(graph_parse_check_v5_s1, {
     Graph graph = GRAPH_parse("../instances/test_set1/check_v5_s1.dat");
 
-    cheat_assert(graph->nodes == 5);
-    cheat_assert(graph->arcs == 20);
+    cheat_assert(graph->vertices == 5);
     cheat_assert(graph->first == 1);
-
-    ListNode actual[4];
 
     ListNode expected0[] = {{1, 5},
                             {2, 4},
@@ -33,40 +38,10 @@ CHEAT_TEST(graph_parse_check_v5_s1, {
 
     size_t i;
 
-    i = 0;
-    for (LL_foreach(graph->adjacency[0], actual)) {
-        cheat_assert(actual->vertex == expected0[i].vertex);
-        cheat_assert(actual->cost == expected0[i].cost);
-        i++;
-    }
-
-    i = 0;
-    for (LL_foreach(graph->adjacency[1], actual)) {
-        cheat_assert(actual->vertex == expected1[i].vertex);
-        cheat_assert(actual->cost == expected1[i].cost);
-        i++;
-    }
-
-    i = 0;
-    for (LL_foreach(graph->adjacency[2], actual)) {
-        cheat_assert(actual->vertex == expected2[i].vertex);
-        cheat_assert(actual->cost == expected2[i].cost);
-        i++;
-    }
-
-    i = 0;
-    for (LL_foreach(graph->adjacency[3], actual)) {
-        cheat_assert(actual->vertex == expected3[i].vertex);
-        cheat_assert(actual->cost == expected3[i].cost);
-        i++;
-    }
-
-    i = 0;
-    for (LL_foreach(graph->adjacency[4], actual)) {
-        cheat_assert(actual->vertex == expected4[i].vertex);
-        cheat_assert(actual->cost == expected4[i].cost);
-        i++;
-    }
+    GRAPH_PARSE_CHECK(graph->adjacency[0], expected0);
+    GRAPH_PARSE_CHECK(graph->adjacency[1], expected1);
+    GRAPH_PARSE_CHECK(graph->adjacency[2], expected2);
+    GRAPH_PARSE_CHECK(graph->adjacency[3], expected3);
 
     GRAPH_delete(&graph);
     cheat_assert(graph == NULL);
