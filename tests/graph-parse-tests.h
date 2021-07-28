@@ -58,4 +58,7 @@ CHEAT_TEST(graph_parse_check_v5_s1, {
         cheat_assert(actual[i].index == expected4[i].index);
         cheat_assert(actual[i].cost == expected4[i].cost);
     }
+
+    GRAPH_delete(&graph);
+    cheat_assert(graph == NULL);
 })

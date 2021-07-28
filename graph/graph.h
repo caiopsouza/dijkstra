@@ -12,4 +12,6 @@ Graph GRAPH_new(size_t size);
 
 Graph GRAPH_parse(char *filename);
 
+void GRAPH_delete(Graph *self);
+
 #endif //DIJKSTRA_GRAPH_H

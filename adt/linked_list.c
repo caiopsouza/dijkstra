@@ -21,7 +21,7 @@ void LL_delete(LinkedList *self) {
     *self = NULL;
 }
 
-void LL_append(LinkedList self, const size_t index, const unsigned int cost) {
+void LL_append(LinkedList self, const size_t index, const Cost cost) {
     LinkedListNode node = (LinkedListNode) calloc(1, sizeof(struct LinkedListNodeData));
 
     node->index = index;

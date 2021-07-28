@@ -2,6 +2,7 @@
 #define DIJKSTRA_LINKED_LIST_H
 
 #include <stdbool.h>
+#include "data.h"
 
 typedef struct LinkedListData *LinkedList;
 typedef const struct LinkedListData *LinkedListRO;
@@ -19,12 +20,12 @@ struct LinkedListData {
 
 typedef struct {
     size_t index;
-    unsigned int cost;
+    Cost cost;
 } ListNode;
 
 struct LinkedListNodeData {
     size_t index;
-    unsigned int cost;
+    Cost cost;
     LinkedListNode next;
 };
 
@@ -34,7 +35,7 @@ size_t LL_len(LinkedListRO self);
 
 void LL_delete(LinkedList *list);
 
-void LL_append(LinkedList self, size_t index, unsigned int cost);
+void LL_append(LinkedList self, size_t index, Cost cost);
 
 void LL_to_array(LinkedList self, ListNode *array);
 

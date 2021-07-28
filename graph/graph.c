@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "graph.h"
+#include "../adt/data.h"
 
 Graph GRAPH_new(size_t arcs) {
     Graph res = malloc(sizeof(GraphData) + arcs * sizeof(LinkedList));
@@ -15,7 +16,7 @@ Graph GRAPH_new(size_t arcs) {
 Graph GRAPH_parse(char *filename) {
     FILE *file = fopen(filename, "r");
 
-    // Cabeçalho
+    // Header
     size_t nodes = -1, arcs = -1;
     fscanf(file, "NB_NODES%zu\n", &nodes);
     fscanf(file, "NB_ARCS%zu\n", &arcs);
@@ -23,15 +24,27 @@ Graph GRAPH_parse(char *filename) {
 
     Graph res = GRAPH_new(arcs);
 
-    // Corpo
+    // Body
     for (size_t i = 0; i < arcs; i++) {
         size_t node = -1, neighbor = -1;
-        unsigned int cost = -1;
+        Cost cost = -1;
         fscanf(file, "%zu %zu %u", &node, &neighbor, &cost);
         LL_append(res->adjacency[node], neighbor, cost);
     }
 
-    // Rodapé
+    // Footer
     fscanf(file, "END");
+    fclose(file);
+
     return res;
+}
+
+void GRAPH_delete(Graph *self) {
+    Graph graph = *self;
+
+    for (size_t i = 0; i < graph->arcs; i++)
+        LL_delete(&graph->adjacency[i]);
+
+    free(graph);
+    *self = NULL;
 }
