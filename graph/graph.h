@@ -4,7 +4,9 @@
 #include "../adt/linked_list.h"
 
 typedef struct {
+    size_t nodes;
     size_t arcs;
+    size_t first;
     LinkedList adjacency[];
 } GraphData, *Graph;
 

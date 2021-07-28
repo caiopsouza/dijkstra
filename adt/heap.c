@@ -2,18 +2,18 @@
 #include "heap.h"
 
 Heap HEAP_new(size_t capacity) {
-    Heap res = malloc(sizeof(HeapData) + capacity * sizeof(Distance));
+    Heap res = malloc(sizeof(HeapData) + capacity * sizeof(size_t));
     res->size = 0;
     return res;
 }
 
-void swap(Distance *a, Distance *b) {
-    Distance temp = *a;
+void swap(size_t *a, size_t *b) {
+    size_t temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void HEAP_add(Heap self, Distance dist) {
+void HEAP_add(Heap self, size_t dist) {
     size_t index = self->size;
     size_t parent = (index - 1) >> 1;
 

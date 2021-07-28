@@ -1,14 +1,13 @@
 #include <malloc.h>
 #include "array.h"
-#include "data.h"
 
 Array ARRAY_new(size_t capacity) {
-    Array res = malloc(sizeof(ArrayData) + capacity * sizeof(Distance));
+    Array res = malloc(sizeof(ArrayData) + capacity * sizeof(size_t));
     res->size = 0;
     return res;
 }
 
-void ARRAY_add(Array self, Distance dist) {
+void ARRAY_add(Array self, size_t dist) {
     self->data[self->size++] = dist;
 }
 

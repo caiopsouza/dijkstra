@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "graph.h"
-#include "../adt/data.h"
 
 Graph GRAPH_new(size_t arcs) {
     Graph res = malloc(sizeof(GraphData) + arcs * sizeof(LinkedList));
     res->arcs = arcs;
+    res->first = 0;
 
     for (size_t i = 0; i < arcs; i++)
         res->adjacency[i] = LL_new();
@@ -23,13 +23,18 @@ Graph GRAPH_parse(char *filename) {
     fscanf(file, "LIST_OF_ARCS COSTS\n");
 
     Graph res = GRAPH_new(arcs);
+    res->nodes = nodes;
 
     // Body
     for (size_t i = 0; i < arcs; i++) {
         size_t node = -1, neighbor = -1;
-        Cost cost = -1;
-        fscanf(file, "%zu %zu %u", &node, &neighbor, &cost);
+        size_t cost = -1;
+
+        fscanf(file, "%zu %zu %zu", &node, &neighbor, &cost);
+
         LL_append(res->adjacency[node], neighbor, cost);
+
+        if (i == 0) res->first = node;
     }
 
     // Footer

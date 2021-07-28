@@ -4,7 +4,9 @@
 CHEAT_TEST(graph_parse_check_v5_s1, {
     Graph graph = GRAPH_parse("../instances/test_set1/check_v5_s1.dat");
 
+    cheat_assert(graph->nodes == 5);
     cheat_assert(graph->arcs == 20);
+    cheat_assert(graph->first == 1);
 
     ListNode actual[4];
 
@@ -29,34 +31,41 @@ CHEAT_TEST(graph_parse_check_v5_s1, {
                             {2, 48},
                             {3, 6}};
 
-    LL_to_array(graph->adjacency[0], actual);
-    for (size_t i = 0; i < 4; i++) {
-        cheat_assert(actual[i].index == expected0[i].index);
-        cheat_assert(actual[i].cost == expected0[i].cost);
+    size_t i;
+
+    i = 0;
+    for (LL_foreach(graph->adjacency[0], actual)) {
+        cheat_assert(actual->vertex == expected0[i].vertex);
+        cheat_assert(actual->cost == expected0[i].cost);
+        i++;
     }
 
-    LL_to_array(graph->adjacency[1], actual);
-    for (size_t i = 0; i < 4; i++) {
-        cheat_assert(actual[i].index == expected1[i].index);
-        cheat_assert(actual[i].cost == expected1[i].cost);
+    i = 0;
+    for (LL_foreach(graph->adjacency[1], actual)) {
+        cheat_assert(actual->vertex == expected1[i].vertex);
+        cheat_assert(actual->cost == expected1[i].cost);
+        i++;
     }
 
-    LL_to_array(graph->adjacency[2], actual);
-    for (size_t i = 0; i < 4; i++) {
-        cheat_assert(actual[i].index == expected2[i].index);
-        cheat_assert(actual[i].cost == expected2[i].cost);
+    i = 0;
+    for (LL_foreach(graph->adjacency[2], actual)) {
+        cheat_assert(actual->vertex == expected2[i].vertex);
+        cheat_assert(actual->cost == expected2[i].cost);
+        i++;
     }
 
-    LL_to_array(graph->adjacency[3], actual);
-    for (size_t i = 0; i < 4; i++) {
-        cheat_assert(actual[i].index == expected3[i].index);
-        cheat_assert(actual[i].cost == expected3[i].cost);
+    i = 0;
+    for (LL_foreach(graph->adjacency[3], actual)) {
+        cheat_assert(actual->vertex == expected3[i].vertex);
+        cheat_assert(actual->cost == expected3[i].cost);
+        i++;
     }
 
-    LL_to_array(graph->adjacency[4], actual);
-    for (size_t i = 0; i < 4; i++) {
-        cheat_assert(actual[i].index == expected4[i].index);
-        cheat_assert(actual[i].cost == expected4[i].cost);
+    i = 0;
+    for (LL_foreach(graph->adjacency[4], actual)) {
+        cheat_assert(actual->vertex == expected4[i].vertex);
+        cheat_assert(actual->cost == expected4[i].cost);
+        i++;
     }
 
     GRAPH_delete(&graph);

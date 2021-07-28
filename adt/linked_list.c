@@ -21,10 +21,10 @@ void LL_delete(LinkedList *self) {
     *self = NULL;
 }
 
-void LL_append(LinkedList self, const size_t index, const Cost cost) {
+void LL_append(LinkedList self, const size_t vertex, const size_t cost) {
     LinkedListNode node = (LinkedListNode) calloc(1, sizeof(struct LinkedListNodeData));
 
-    node->index = index;
+    node->vertex = vertex;
     node->cost = cost;
     self->len++;
 
@@ -39,11 +39,18 @@ void LL_append(LinkedList self, const size_t index, const Cost cost) {
     self->last = node;
 }
 
-void LL_to_array(LinkedList self, ListNode *array) {
-    int i = 0;
-    for (LL_foreach(self, node)) {
-        array[i].index = node->index;
-        array[i].cost = node->cost;
-        i++;
+void LL_remove_vertex(LinkedList self, size_t vertex) {
+    LinkedListNode last_node = NULL;
+    LinkedListNode node;
+
+    for (LL_foreach_decl(self, node)) {
+        if (node->vertex == vertex) break;
+        last_node = node;
+    }
+
+    if (node) {
+        if (last_node) last_node->next = node->next;
+        else self->first = node->next;
+        free(node);
     }
 }
