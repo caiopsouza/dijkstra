@@ -7,26 +7,25 @@ Heap HEAP_new(size_t capacity) {
     return res;
 }
 
-void swap(size_t *a, size_t *b) {
-    size_t temp = *a;
+void swap(Edge *a, Edge *b) {
+    Edge temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void HEAP_add(Heap self, size_t dist) {
+void HEAP_add(Heap self, size_t edge, size_t cost) {
     size_t index = self->size;
     size_t parent = (index - 1) >> 1;
 
-    self->data[index] = dist;
+    Edge e = {.id = edge, .cost = cost};
+    self->data[index] = e;
+    self->size++;
 
-    while (self->data[index] < self->data[parent]) {
+    while (self->data[index].cost < self->data[parent].cost) {
         swap(&self->data[parent], &self->data[index]);
         index = parent;
         parent = (index - 1) >> 1;
     }
-
-    self->size++;
-    self->data[index] = dist;
 }
 
 void HEAP_delete(Heap *self) {

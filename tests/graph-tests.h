@@ -21,7 +21,10 @@ CHEAT_TEST(graph_remove_zero, {
     Graph graph = GRAPH_parse("../instances/test_set1/check_v5_s1.dat");
     GRAPH_remove_vertex(graph, 0);
 
-    ListNode expected0[] = {};
+    ListNode expected0[] = {{1, 5},
+                            {2, 4},
+                            {3, 26},
+                            {4, 43}};
     ListNode expected1[] = {{2, 67},
                             {3, 75},
                             {4, 43}};
@@ -51,7 +54,10 @@ CHEAT_TEST(graph_remove_two, {
     ListNode expected1[] = {{0, 5},
                             {3, 75},
                             {4, 43}};
-    ListNode expected2[] = {};
+    ListNode expected2[] = {{0, 4},
+                            {1, 67},
+                            {3, 38},
+                            {4, 48}};
     ListNode expected3[] = {{0, 26},
                             {1, 75},
                             {4, 6}};
