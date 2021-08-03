@@ -38,6 +38,8 @@ void LL_delete(LinkedList *list);
 
 void LL_append(LinkedList self, size_t vertex, size_t cost);
 
+void LL_remove_node(LinkedList self, LinkedListNode last_node, LinkedListNode node);
+
 void LL_remove_vertex(LinkedList self, size_t vertex);
 
 #endif //DIJKSTRA_LINKED_LIST_H

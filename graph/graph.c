@@ -41,9 +41,6 @@ Graph GRAPH_parse(char *filename) {
 }
 
 void GRAPH_remove_vertex(Graph self, size_t vertex) {
-    free(self->adjacency[vertex]);
-    self->adjacency[vertex] = LL_new();
-
     for (size_t i = 0; i < self->vertices; i++) {
         LL_remove_vertex(self->adjacency[i], vertex);
     }

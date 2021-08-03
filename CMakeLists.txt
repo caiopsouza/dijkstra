@@ -14,4 +14,6 @@ set(TEST_FILES
         tests/main-tests.c
         )
 
+set(CMAKE_C_FLAGS_RELEASE "-O3")
+
 add_executable(tests ${SOURCE_FILES} ${TEST_FILES})
