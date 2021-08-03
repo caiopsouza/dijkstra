@@ -35,3 +35,18 @@ CHEAT_TEST(array_multiple, {
     ARRAY_delete(&array);
     cheat_assert(array == NULL);
 })
+
+CHEAT_TEST(array_init, {
+    Array array = ARRAY_init(5, 7);
+
+    cheat_assert(array->size == 5);
+
+    cheat_assert(array->data[0] == 7);
+    cheat_assert(array->data[1] == 7);
+    cheat_assert(array->data[2] == 7);
+    cheat_assert(array->data[3] == 7);
+    cheat_assert(array->data[4] == 7);
+
+    ARRAY_delete(&array);
+    cheat_assert(array == NULL);
+})

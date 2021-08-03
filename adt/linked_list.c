@@ -54,3 +54,7 @@ void LL_remove_vertex(LinkedList self, size_t vertex) {
         free(node);
     }
 }
+
+ListNode LL_smallest_cost(LinkedList self) {
+
+}

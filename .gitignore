@@ -76,3 +76,4 @@ fabric.properties
 
 # Cmake
 cmake-build-debug
+cmake-build-release

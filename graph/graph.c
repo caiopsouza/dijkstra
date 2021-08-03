@@ -26,13 +26,10 @@ Graph GRAPH_parse(char *filename) {
 
     // Body
     for (size_t i = 0; i < arcs; i++) {
-        size_t node = -1, neighbor = -1;
-        size_t cost = -1;
-
+        size_t node = -1, neighbor = -1, cost = -1;
         fscanf(file, "%zu %zu %zu", &node, &neighbor, &cost);
 
         LL_append(res->adjacency[node], neighbor, cost);
-
         if (i == 0) res->first = node;
     }
 

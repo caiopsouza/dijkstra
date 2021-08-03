@@ -10,6 +10,8 @@ typedef struct {
 
 Array ARRAY_new(size_t capacity);
 
+Array ARRAY_init(size_t size, size_t initial_value);
+
 void ARRAY_add(Array self, size_t dist);
 
 void ARRAY_delete(Array *self);
