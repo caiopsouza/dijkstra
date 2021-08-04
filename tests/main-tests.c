@@ -1,5 +1,6 @@
 #include "cheat.h"
 
+#include "edge-tests.h"
 #include "array-tests.h"
 #include "heap-tests.h"
 #include "linked-list-tests.h"

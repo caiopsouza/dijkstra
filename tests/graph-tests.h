@@ -1,7 +1,6 @@
 #include "cheat.h"
 #include "../graph/graph.h"
 
-
 #define GRAPH_CHECK(adj, expected) \
 i = 0; \
 for (LL_foreach(adj, actual)) { \

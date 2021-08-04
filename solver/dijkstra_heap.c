@@ -1,4 +1,5 @@
 #include "dijkstra_heap.h"
+#include "../adt/heap.h"
 
 // Set a vertex as explored
 void
@@ -33,9 +34,12 @@ void dijkstra_heap(Graph graph, size_t costs[]) {
         is_explored[i] = false;
     }
 
+    Heap costs_heap = HEAP_init(graph->vertices);
+
     // Explored list
     size_t explored[graph->vertices];
     size_t explored_next = 0;
+    costs_heap->data[0].cost = 0;
 
     // Starts with the first on the graph as explored
     size_t start = 0;
