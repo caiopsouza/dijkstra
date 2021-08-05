@@ -10,10 +10,9 @@ for (LL_foreach(adj, actual)) { \
 }
 
 CHEAT_TEST(graph_parse_check_v5_s1, {
-    Graph graph = GRAPH_parse("../instances/test_set1/check_v5_s1.dat");
+    Graph graph = GRAPH_parse_test("../instances/test_set1/check_v5_s1.dat");
 
     cheat_assert(graph->vertices == 5);
-    cheat_assert(graph->first == 1);
 
     ListNode expected0[] = {{1, 5},
                             {2, 4},

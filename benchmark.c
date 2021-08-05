@@ -30,48 +30,39 @@ double get_time()
 
 void benchmark(
         char *name,
+        Graph graph,
         void (*dijkstra)(Graph, size_t[]),
-        char *instance,
         bool print_result,
         size_t warmup_amount,
         size_t measure_amount
 ) {
-
     // Warmup
     for (int i = 0; i < warmup_amount; i++) {
-        Graph graph = GRAPH_parse(instance);
         size_t costs[graph->vertices];
         dijkstra(graph, costs);
-        GRAPH_delete(&graph);
     }
 
     double measures[measure_amount];
 
     // Measure
-    printf("Benchmark: %s\n", name);
+    printf("Benchmark %s:", name);
     for (int i = 0; i < measure_amount; i++) {
-
-        Graph graph = GRAPH_parse(instance);
         size_t costs[graph->vertices];
 
         double start_time = get_time();
-        //clock_t start_time = clock();
         dijkstra(graph, costs);
-        //measures[i] = (double) (clock() - start_time) / CLOCKS_PER_SEC;
         measures[i] = get_time() - start_time;
 
         // Print the last result
         if (print_result && i == measure_amount - 1) {
-            printf("Results:\n", name);
+            printf("Results:\n");
             for (size_t j = 0; j < graph->vertices; j++)
                 printf("%zu %zu\n", j, costs[j]);
-            printf("End results", name);
+            printf("End results");
         }
-
-        GRAPH_delete(&graph);
     }
 
     for (int i = 0; i < measure_amount; i++)
-        printf("Step %d done in %f seconds\n", i, measures[i]);
-    printf("End of benchmark: %s\n\n", name);
+        printf(" %f", measures[i]);
+    printf("\n");
 }

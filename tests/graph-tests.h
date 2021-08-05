@@ -17,7 +17,7 @@ GRAPH_CHECK(graph->adjacency[2], expected2); \
 GRAPH_CHECK(graph->adjacency[3], expected3)
 
 CHEAT_TEST(graph_remove_zero, {
-    Graph graph = GRAPH_parse("../instances/test_set1/check_v5_s1.dat");
+    Graph graph = GRAPH_parse_test("../instances/test_set1/check_v5_s1.dat");
     GRAPH_remove_vertex(graph, 0);
 
     ListNode expected0[] = {{1, 5},
@@ -44,7 +44,7 @@ CHEAT_TEST(graph_remove_zero, {
 })
 
 CHEAT_TEST(graph_remove_two, {
-    Graph graph = GRAPH_parse("../instances/test_set1/check_v5_s1.dat");
+    Graph graph = GRAPH_parse_test("../instances/test_set1/check_v5_s1.dat");
     GRAPH_remove_vertex(graph, 2);
 
     ListNode expected0[] = {{1, 5},

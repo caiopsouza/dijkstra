@@ -5,11 +5,12 @@
 
 typedef struct {
     size_t vertices;
-    size_t first;
     LinkedList adjacency[];
 } GraphData, *Graph;
 
 Graph GRAPH_new(size_t vertices);
+
+Graph GRAPH_parse_test(char *filename);
 
 Graph GRAPH_parse(char *filename);
 

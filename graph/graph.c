@@ -5,7 +5,6 @@
 Graph GRAPH_new(size_t vertices) {
     Graph res = malloc(sizeof(GraphData) + vertices * sizeof(LinkedList));
     res->vertices = vertices;
-    res->first = 0;
 
     for (size_t i = 0; i < vertices; i++)
         res->adjacency[i] = LL_new();
@@ -13,7 +12,7 @@ Graph GRAPH_new(size_t vertices) {
     return res;
 }
 
-Graph GRAPH_parse(char *filename) {
+Graph GRAPH_parse_test(char *filename) {
     FILE *file = fopen(filename, "r");
 
     // Header
@@ -30,7 +29,38 @@ Graph GRAPH_parse(char *filename) {
         fscanf(file, "%zu %zu %zu", &node, &neighbor, &cost);
 
         LL_append(res->adjacency[node], neighbor, cost);
-        if (i == 0) res->first = node;
+    }
+
+    // Footer
+    fscanf(file, "END");
+    fclose(file);
+
+    return res;
+}
+
+#define LN "%*[^\n]\n"
+
+Graph GRAPH_parse(char *filename) {
+    FILE *file = fopen(filename, "r");
+
+    // Header
+    size_t nodes = -1, arcs = -1;
+    fscanf(file, LN LN LN LN LN "End\n\n" LN); // Skip the first eight lines
+    fscanf(file, "Nodes %zu\n", &nodes);
+    fscanf(file, "Edges %zu\n", &arcs);
+
+    Graph res = GRAPH_new(nodes);
+
+    // Body
+    for (size_t i = 0; i < arcs; i++) {
+        size_t node = -1, neighbor = -1, cost = -1;
+        fscanf(file, "E %zu %zu %zu\n", &node, &neighbor, &cost);
+
+        node--;
+        neighbor--;
+
+        LL_append(res->adjacency[node], neighbor, cost);
+        LL_append(res->adjacency[neighbor], node, cost);
     }
 
     // Footer
