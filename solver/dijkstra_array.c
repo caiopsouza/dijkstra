@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "dijkstra_array.h"
 
 void dijkstra_array(Graph graph, size_t costs[]) {

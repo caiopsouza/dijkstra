@@ -36,19 +36,17 @@ void benchmark(
         size_t warmup_amount,
         size_t measure_amount
 ) {
+    size_t costs[graph->vertices];
+
     // Warmup
-    for (int i = 0; i < warmup_amount; i++) {
-        size_t costs[graph->vertices];
+    for (int i = 0; i < warmup_amount; i++)
         dijkstra(graph, costs);
-    }
 
     double measures[measure_amount];
 
     // Measure
     printf("Benchmark %s:", name);
     for (int i = 0; i < measure_amount; i++) {
-        size_t costs[graph->vertices];
-
         double start_time = get_time();
         dijkstra(graph, costs);
         measures[i] = get_time() - start_time;

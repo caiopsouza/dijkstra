@@ -1,7 +1,7 @@
 #ifndef DIJKSTRA_EDGE_H
 #define DIJKSTRA_EDGE_H
 
-#include <stdint.h>
+#include <stddef.h>
 
 typedef struct {
     size_t id;

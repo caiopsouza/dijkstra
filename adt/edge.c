@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include "edge.h"
 
 Edge EDGE_new(size_t id, size_t cost) {

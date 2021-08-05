@@ -54,7 +54,6 @@ static Instance instances[] = {
         {"../instances/DMXA/dmxa1801.stp",           GRAPH_parse},
 
         {"../instances/test_set1/check_v5_s1.dat",   GRAPH_parse_test},
-        {"../instances/test_set1/inst_v1000_s1.dat", GRAPH_parse_test},
         {"../instances/test_set1/inst_v100_s1.dat",  GRAPH_parse_test},
         {"../instances/test_set1/inst_v200_s1.dat",  GRAPH_parse_test},
         {"../instances/test_set1/inst_v300_s1.dat",  GRAPH_parse_test},
@@ -64,9 +63,9 @@ static Instance instances[] = {
         {"../instances/test_set1/inst_v700_s1.dat",  GRAPH_parse_test},
         {"../instances/test_set1/inst_v800_s1.dat",  GRAPH_parse_test},
         {"../instances/test_set1/inst_v900_s1.dat",  GRAPH_parse_test},
+        {"../instances/test_set1/inst_v1000_s1.dat", GRAPH_parse_test},
 
         {"../instances/test_set2/check_v5_s2.dat",   GRAPH_parse_test},
-        {"../instances/test_set2/inst_v1000_s2.dat", GRAPH_parse_test},
         {"../instances/test_set2/inst_v100_s2.dat",  GRAPH_parse_test},
         {"../instances/test_set2/inst_v200_s2.dat",  GRAPH_parse_test},
         {"../instances/test_set2/inst_v300_s2.dat",  GRAPH_parse_test},
@@ -76,6 +75,7 @@ static Instance instances[] = {
         {"../instances/test_set2/inst_v700_s2.dat",  GRAPH_parse_test},
         {"../instances/test_set2/inst_v800_s2.dat",  GRAPH_parse_test},
         {"../instances/test_set2/inst_v900_s2.dat",  GRAPH_parse_test},
+        {"../instances/test_set2/inst_v1000_s2.dat", GRAPH_parse_test},
 
         {NULL, NULL},
 };

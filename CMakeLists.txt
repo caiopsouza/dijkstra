@@ -16,6 +16,6 @@ add_executable(dijkstra main.c benchmark.h benchmark.c ${SOURCE_FILES})
 set(TEST_FILES
         tests/main-tests.c)
 
-set(CMAKE_C_FLAGS_RELEASE "-O3")
+set(CMAKE_C_FLAGS_RELEASE "-O3 -DNO_FREE")
 
 add_executable(tests ${SOURCE_FILES} ${TEST_FILES})

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdint.h>
 #include "linked_list.h"
 
 LinkedList LL_new() {
@@ -10,6 +11,7 @@ size_t LL_len(LinkedListRO self) {
 }
 
 void LL_delete(LinkedList *self) {
+#ifndef NO_FREE
     LinkedListNode node = (*self)->first;
     while (node) {
         LinkedListNode next_node = node->next;
@@ -18,6 +20,8 @@ void LL_delete(LinkedList *self) {
     }
 
     free(*self);
+#endif
+
     *self = NULL;
 }
 
@@ -46,7 +50,10 @@ LinkedListNode LL_remove_node(LinkedList self, LinkedListNode prev_node, LinkedL
         if (prev_node) prev_node->next = node->next;
         else self->first = node->next;
 
+#ifndef NO_FREE
         free(node);
+#endif
+
         self->len--;
 
         return next;

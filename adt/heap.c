@@ -1,5 +1,6 @@
 #include <malloc.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include "heap.h"
 
 Heap HEAP_new(size_t capacity) {
@@ -91,7 +92,9 @@ Edge HEAP_pop(Heap self) {
 }
 
 void HEAP_delete(Heap *self) {
+#ifndef NO_FREE
     free((*self)->keys);
     free(*self);
+#endif
     *self = NULL;
 }
