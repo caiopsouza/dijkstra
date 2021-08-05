@@ -8,8 +8,7 @@ set(SOURCE_FILES
         adt/heap.c adt/heap.h
         adt/linked_list.c adt/linked_list.h
         graph/graph.c graph/graph.h
-        solver/dijkstra_array_with_explored_removal.c solver/dijkstra_array_with_explored_removal.h
-        solver/dijkstra_array_with_explored_marked.c solver/dijkstra_array_with_explored_marked.h
+        solver/dijkstra_array.c solver/dijkstra_array.h
         solver/dijkstra_heap.c solver/dijkstra_heap.h)
 
 add_executable(dijkstra main.c benchmark.h benchmark.c ${SOURCE_FILES})

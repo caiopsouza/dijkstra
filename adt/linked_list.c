@@ -39,12 +39,19 @@ void LL_append(LinkedList self, const size_t vertex, const size_t cost) {
     self->last = node;
 }
 
-void LL_remove_node(LinkedList self, LinkedListNode last_node, LinkedListNode node) {
+LinkedListNode LL_remove_node(LinkedList self, LinkedListNode prev_node, LinkedListNode node) {
     if (node) {
-        if (last_node) last_node->next = node->next;
+        LinkedListNode next = node->next;
+
+        if (prev_node) prev_node->next = node->next;
         else self->first = node->next;
+
         free(node);
+        self->len--;
+
+        return next;
     }
+    return NULL;
 }
 
 void LL_remove_vertex(LinkedList self, size_t vertex) {
@@ -57,4 +64,27 @@ void LL_remove_vertex(LinkedList self, size_t vertex) {
     }
 
     LL_remove_node(self, last_node, node);
+}
+
+size_t LL_remove_smallest_by_cost(LinkedList vertices, size_t costs[]) {
+    LinkedListNode prev = NULL;
+    LinkedListNode prev_smallest = NULL;
+    LinkedListNode smallest = NULL;
+    size_t min_cost = SIZE_MAX;
+
+    for (LL_foreach(vertices, node)) {
+        size_t cost = costs[node->vertex];
+        if (cost < min_cost) {
+            prev_smallest = prev;
+            smallest = node;
+            min_cost = cost;
+        }
+
+        prev = node;
+    }
+
+    size_t res = smallest->vertex;
+    LL_remove_node(vertices, prev_smallest, smallest);
+
+    return res;
 }

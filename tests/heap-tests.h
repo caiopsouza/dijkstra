@@ -9,7 +9,7 @@
     edge_assert((heap)->data[index], id_expected, cost_expected)
 
 CHEAT_TEST(heap_0, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
     cheat_assert(heap != NULL);
 
     HEAP_delete(&heap);
@@ -17,7 +17,7 @@ CHEAT_TEST(heap_0, {
 })
 
 CHEAT_TEST(heap_1, {
-    Heap heap = HEAP_new(6);
+    Heap heap = HEAP_new(8);
 
     HEAP_add(heap, 7, 100);
     heap_assert(heap, 0, 7, 100);
@@ -27,7 +27,7 @@ CHEAT_TEST(heap_1, {
 })
 
 CHEAT_TEST(heap_2, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
 
     HEAP_add(heap, 7, 100);
     HEAP_add(heap, 666, 70);
@@ -40,7 +40,7 @@ CHEAT_TEST(heap_2, {
 })
 
 CHEAT_TEST(heap_3, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
 
     HEAP_add(heap, 7, 100);
     HEAP_add(heap, 666, 70);
@@ -55,7 +55,7 @@ CHEAT_TEST(heap_3, {
 })
 
 CHEAT_TEST(heap_4, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
 
     HEAP_add(heap, 7, 100);
     HEAP_add(heap, 666, 70);
@@ -72,7 +72,7 @@ CHEAT_TEST(heap_4, {
 })
 
 CHEAT_TEST(heap_5, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
 
     HEAP_add(heap, 7, 100);
     HEAP_add(heap, 666, 70);
@@ -91,7 +91,7 @@ CHEAT_TEST(heap_5, {
 })
 
 CHEAT_TEST(heap_6, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
 
     HEAP_add(heap, 7, 100);
     HEAP_add(heap, 666, 70);
@@ -112,7 +112,7 @@ CHEAT_TEST(heap_6, {
 })
 
 CHEAT_TEST(heap_7, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
 
     HEAP_add(heap, 7, 100);
     HEAP_add(heap, 666, 70);
@@ -147,7 +147,7 @@ CHEAT_TEST(heap_init, {
 })
 
 CHEAT_TEST(heap_pop, {
-    Heap heap = HEAP_new(20);
+    Heap heap = HEAP_new(1000);
     Edge first;
 
     HEAP_add(heap, 7, 100);

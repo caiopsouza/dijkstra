@@ -4,6 +4,7 @@
 
 Heap HEAP_new(size_t capacity) {
     Heap res = malloc(sizeof(HeapData) + capacity * sizeof(Edge));
+    res->keys = malloc(capacity * sizeof(size_t));
     res->size = 0;
 
     for (size_t i = 0; i < capacity; i++) {
@@ -21,24 +22,41 @@ Heap HEAP_init(size_t size) {
     for (size_t i = 0; i < size; i++) {
         Edge e = {.id = i, .cost = SIZE_MAX};
         res->data[i] = e;
+        res->keys[i] = i;
     }
 
     return res;
 }
 
-void HEAP_add(Heap self, size_t edge, size_t cost) {
-    size_t index = self->size;
+void heapify(Heap self, size_t index) {
     size_t parent = (index - 1) >> 1;
 
-    Edge e = {.id = edge, .cost = cost};
-    self->data[index] = e;
-    self->size++;
+    while (index > 0 && self->data[index].cost < self->data[parent].cost) {
+        self->keys[self->data[parent].id] = index;
+        self->keys[self->data[index].id] = parent;
 
-    while (self->data[index].cost < self->data[parent].cost) {
         EDGE_swap(&self->data[parent], &self->data[index]);
+
         index = parent;
         parent = (index - 1) >> 1;
     }
+}
+
+void HEAP_add(Heap self, size_t edge, size_t cost) {
+    size_t index = self->size;
+
+    Edge e = {.id = edge, .cost = cost};
+    self->data[index] = e;
+    self->keys[edge] = index;
+    self->size++;
+
+    heapify(self, index);
+}
+
+void HEAP_decrease_to(Heap self, size_t vertex, size_t new_cost) {
+    size_t index = self->keys[vertex];
+    self->data[index].cost = new_cost;
+    heapify(self, index);
 }
 
 Edge HEAP_pop(Heap self) {
@@ -73,6 +91,7 @@ Edge HEAP_pop(Heap self) {
 }
 
 void HEAP_delete(Heap *self) {
+    free((*self)->keys);
     free(*self);
     *self = NULL;
 }
