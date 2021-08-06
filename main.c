@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include <stdio.h>
 #include "graph/graph.h"
 #include "benchmark.h"

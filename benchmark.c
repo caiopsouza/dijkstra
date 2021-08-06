@@ -16,14 +16,11 @@ double get_time() {
 #else
 
 #include <sys/time.h>
-#include <sys/resource.h>
 
-double get_time()
-{
-    struct timeval t;
-    struct timezone tzp;
-    gettimeofday(&t, &tzp);
-    return t.tv_sec + t.tv_usec*1e-6;
+double get_time() {
+    struct timespec t;
+    clock_gettime(CLOCK_MONOTONIC, &t);
+    return (double) t.tv_sec + 1.0e-9 * t.tv_nsec;
 }
 
 #endif
@@ -61,6 +58,6 @@ void benchmark(
     }
 
     for (int i = 0; i < measure_amount; i++)
-        printf(" %f", measures[i]);
+        printf(" %2.8f", measures[i]);
     printf("\n");
 }
