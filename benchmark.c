@@ -42,7 +42,7 @@ void benchmark(
     double measures[measure_amount];
 
     // Measure
-    printf("Benchmark %s:", name);
+    printf("Benchmark %s (%zu, %zu):", name, graph->vertices, graph->edges);
     for (int i = 0; i < measure_amount; i++) {
         double start_time = get_time();
         dijkstra(graph, costs);

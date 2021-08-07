@@ -2,9 +2,11 @@
 #include <malloc.h>
 #include "graph.h"
 
-Graph GRAPH_new(size_t vertices) {
+Graph GRAPH_new(size_t vertices, size_t edges) {
     Graph res = malloc(sizeof(GraphData) + vertices * sizeof(LinkedList));
+
     res->vertices = vertices;
+    res->edges = edges;
 
     for (size_t i = 0; i < vertices; i++)
         res->adjacency[i] = LL_new();
@@ -21,7 +23,7 @@ Graph GRAPH_parse_test(char *filename) {
     fscanf(file, "NB_ARCS%zu\n", &arcs);
     fscanf(file, "LIST_OF_ARCS COSTS\n");
 
-    Graph res = GRAPH_new(nodes);
+    Graph res = GRAPH_new(nodes, arcs);
 
     // Body
     for (size_t i = 0; i < arcs; i++) {
@@ -49,7 +51,7 @@ Graph GRAPH_parse(char *filename) {
     fscanf(file, "Nodes %zu\n", &nodes);
     fscanf(file, "Edges %zu\n", &arcs);
 
-    Graph res = GRAPH_new(nodes);
+    Graph res = GRAPH_new(nodes, arcs);
 
     // Body
     for (size_t i = 0; i < arcs; i++) {
