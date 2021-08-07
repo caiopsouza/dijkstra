@@ -35,8 +35,8 @@ def load_data():
                 content = content.split(':')
 
                 dims = content[0][17:][:-1].split(',')
-                m = int(dims[0])
-                n = int(dims[1].strip())
+                n = int(dims[0])
+                m = int(dims[1].strip())
 
                 if 'array' in content[0]:
                     timings_type = test_inst['array']
@@ -72,15 +72,15 @@ for (problem, problem_data) in data.items():
         ratio_filename = 'res/ratio_' + problem + '_' + algo + '_'
 
         if problem[0] != 't':
-            problem = problem.upper()
+            problem_norm = problem.upper()
 
         if algo == 'array':
             divisor = ' dividido por n²'
         else:
             divisor = ' dividido por m*log(n,m/n)'
 
-        plot(linear, problem, algo, True, '', '', linear_filename + 'outliers')
-        plot(linear, problem, algo, False, '', '', linear_filename + 'no_outliers')
+        plot(linear, problem_norm, algo, True, '', '', linear_filename + 'outliers')
+        plot(linear, problem_norm, algo, False, '', '', linear_filename + 'no_outliers')
 
-        plot(ratio, problem, algo, True, ' normalizado', divisor, ratio_filename + 'outliers')
-        plot(ratio, problem, algo, False, ' normalizado', divisor, ratio_filename + 'no_outliers')
+        plot(ratio, problem_norm, algo, True, ' normalizado', divisor, ratio_filename + 'outliers')
+        plot(ratio, problem_norm, algo, False, ' normalizado', divisor, ratio_filename + 'no_outliers')
