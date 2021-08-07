@@ -1,5 +1,3 @@
-import pprint
-
 import pandas as pd
 import math
 import matplotlib.pyplot as plt
@@ -43,7 +41,7 @@ def load_data():
                     ratio = n * n
                 else:
                     timings_type = test_inst['heap']
-                    ratio = m * math.log(n, m / n)
+                    ratio = m * math.log2(n)
 
                 timings_type.append(
                     (n, name, [float(x) for x in content[1].split()], [float(x) / ratio for x in content[1].split()]))
@@ -62,25 +60,72 @@ def plot(timing, problem, algo, showfliers, title, ylabel, filename):
 
 
 data = load_data()
-for (problem, problem_data) in data.items():
-    for (algo, timings) in problem_data.items():
-        timings.sort()
-        linear = {name: timing for (_, name, timing, _) in timings}
-        ratio = {name: timing for (_, name, _, timing) in timings}
 
-        linear_filename = 'res/linear_' + problem + '_' + algo + '_'
-        ratio_filename = 'res/ratio_' + problem + '_' + algo + '_'
 
-        if problem[0] != 't':
-            problem_norm = problem.upper()
+def main():
+    comparing = {}
 
-        if algo == 'array':
-            divisor = ' dividido por n²'
-        else:
-            divisor = ' dividido por m*log(n,m/n)'
+    for (problem, problem_data) in data.items():
+        for (algo, timings) in problem_data.items():
+            timings.sort()
+            linear = {name: timing for (_, name, timing, _) in timings}
+            ratio = {name: timing for (_, name, _, timing) in timings}
 
-        plot(linear, problem_norm, algo, True, '', '', linear_filename + 'outliers')
-        plot(linear, problem_norm, algo, False, '', '', linear_filename + 'no_outliers')
+            for (inst, timing) in linear.items():
+                if inst not in comparing:
+                    comparing[inst] = {}
 
-        plot(ratio, problem_norm, algo, True, ' normalizado', divisor, ratio_filename + 'outliers')
-        plot(ratio, problem_norm, algo, False, ' normalizado', divisor, ratio_filename + 'no_outliers')
+                comparing_time = comparing[inst]
+                comparing_time[algo] = {inst: float(pd.DataFrame(timing).mean())}
+
+            linear_filename = 'res/linear_' + problem + '_' + algo + '_'
+            ratio_filename = 'res/ratio_' + problem + '_' + algo + '_'
+
+            if problem[0] != 't':
+                problem_norm = problem.upper()
+
+            if algo == 'array':
+                divisor = ' dividido por n²'
+            else:
+                divisor = ' dividido por m*log₂n'
+
+            plot(linear, problem_norm, algo, True, '', '', linear_filename + 'outliers')
+            plot(linear, problem_norm, algo, False, '', '', linear_filename + 'no_outliers')
+
+            plot(ratio, problem_norm, algo, True, ' normalizado', divisor, ratio_filename + 'outliers')
+            plot(ratio, problem_norm, algo, False, ' normalizado', divisor, ratio_filename + 'no_outliers')
+
+    def filter(inst, algo):
+        res = []
+        for (k, v) in comparing.items():
+            if inst in k:
+                res.append(v[algo])
+        return res
+
+    def create_data(inst):
+        array = filter(inst, 'array')
+        heap = filter(inst, 'heap')
+
+        index = [list(l)[0] for l in array]
+
+        array = [list(l.values())[0] for l in array]
+        heap = [list(l.values())[0] for l in heap]
+
+        data_graph = {'array': array, 'heap': heap}
+
+        return index, data_graph
+
+    for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), ('s1', 'test_set1'),
+                              ('s2', 'test_set2')]:
+        index, data_graph = create_data(inst)
+        df = pd.DataFrame(data_graph, index=index)
+        plt.figure()
+        ax = df.plot(rot=45, figsize=(12.8, 8))
+        ax.set_yscale('log')
+        plt.title(f'Comparação tempo execução. Instâncias {inst_name}. Escala logarítmica')
+        plt.ylabel('Tempo em segundos.')
+        plt.savefig('res/comp_' + inst)
+        plt.close()
+
+
+main()
