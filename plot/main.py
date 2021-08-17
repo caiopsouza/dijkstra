@@ -1,6 +1,6 @@
 import pandas as pd
-import math
 import matplotlib.pyplot as plt
+import math
 
 
 def load_data():
@@ -38,13 +38,11 @@ def load_data():
 
                 if 'array' in content[0]:
                     timings_type = test_inst['array']
-                    ratio = n * n
                 else:
                     timings_type = test_inst['heap']
-                    ratio = m * math.log2(n)
 
                 timings_type.append(
-                    (n, name, [float(x) for x in content[1].split()], [float(x) / ratio for x in content[1].split()]))
+                    (n, m, name, [float(x) for x in content[1].split()]))
 
     return data
 
@@ -118,14 +116,48 @@ def main():
     for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), ('s1', 'test_set1'),
                               ('s2', 'test_set2')]:
         index, data_graph = create_data(inst)
-        df = pd.DataFrame(data_graph, index=index)
-        plt.figure()
-        ax = df.plot(rot=45, figsize=(12.8, 8))
-        ax.set_yscale('log')
-        plt.title(f'Comparação tempo execução. Instâncias {inst_name}. Escala logarítmica')
-        plt.ylabel('Tempo em segundos.')
-        plt.savefig('res/comp_' + inst)
+        print(index, data_graph['array'])
+
+
+for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), ('test_set1', 'test_set1'),
+                          ('test_set2', 'test_set2')]:
+    inst_data = data[inst]
+
+    for inst_type in ['array', 'heap']:
+        inst_data_impl = inst_data[inst_type]
+        data_nums = []
+        for impl in inst_data_impl:
+            (n, m, name, actual_data) = impl
+            df = pd.DataFrame.from_dict(actual_data)
+            data_nums.append((n, m, name, float(df.median())))
+
+        data_nums.sort()
+
+        data_names = [x[2] for x in data_nums]
+
+        if inst_type == 'array':
+            data_ratio = [x[0] * x[0] for x in data_nums]
+            complexidade = 'n²'
+        else:
+            data_ratio = [x[1] * math.log(x[0]) for x in data_nums]
+            complexidade = 'm log n'
+
+        data_data = [x[3] for x in data_nums]
+        data_df = pd.DataFrame({'inst': data_names, 'expected': data_ratio, 'actual': data_data})
+
+        data_df['ratio'] = data_df.expected / data_df.actual
+
+        ax = data_df.plot(figsize=(19.2, 10.8), x='inst', y='expected', logy=True, legend=False, fontsize=20,
+                          linewidth=7, alpha=0.75)
+        ax.set_ylabel(f'Complexidade {complexidade}', fontdict={'size': 24})
+        ax.set_xlabel(None)
+
+        ax = data_df.actual.plot(x='inst', logy=True, secondary_y=True, rot=45, fontsize=20, linewidth=7, alpha=0.75)
+        ax.set_ylabel('Tempo em segundos', fontdict={'size': 24})
+
+        plt.title(f'Comparação tempo real e complexidade teórica\n{inst_name} com {inst_type}\n',
+                  fontdict={'size': 32})
+
+        plt.tight_layout()
+        plt.savefig(f'comp/{inst}_{inst_type}')
         plt.close()
-
-
-main()
