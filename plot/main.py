@@ -161,8 +161,8 @@ for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), 
                   fontdict={'size': 32})
 
         plt.legend(prop={'size': 18}, handles=[
-            mpatches.Patch(color='#1F77B4', label=f'Complexidade {complexidade}'),
-            mpatches.Patch(color='#FF7F0E', label='Tempo em segundos'),
+            mpatches.Patch(color='#FF7F0E', label=f'Complexidade {complexidade}'),
+            mpatches.Patch(color='#1F77B4', label='Tempo em segundos'),
         ])
 
         plt.tight_layout()
