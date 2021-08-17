@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import math
+import matplotlib.patches as mpatches
 
 
 def load_data():
@@ -147,16 +148,22 @@ for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), 
 
         data_df['ratio'] = data_df.expected / data_df.actual
 
-        ax = data_df.plot(figsize=(19.2, 10.8), x='inst', y='expected', logy=True, legend=False, fontsize=20,
-                          linewidth=7, alpha=0.75)
+        ax = data_df.plot(figsize=(19.2, 10.8), x='inst', y='expected', logy=True, fontsize=20,
+                          linewidth=7, color='#FF7F0E', legend=False)
         ax.set_ylabel(f'Complexidade {complexidade}', fontdict={'size': 24})
         ax.set_xlabel(None)
 
-        ax = data_df.actual.plot(x='inst', logy=True, secondary_y=True, rot=45, fontsize=20, linewidth=7, alpha=0.75)
+        ax = data_df.actual.plot(x='inst', logy=True, secondary_y=True, rot=45, fontsize=20, linewidth=7,
+                                 color='#1F77B4')
         ax.set_ylabel('Tempo em segundos', fontdict={'size': 24})
 
         plt.title(f'Comparação tempo real e complexidade teórica\n{inst_name} com {inst_type}\n',
                   fontdict={'size': 32})
+
+        plt.legend(prop={'size': 18}, handles=[
+            mpatches.Patch(color='#FF7F0E', label=f'Complexidade {complexidade}'),
+            mpatches.Patch(color='#1F77B4', label='Tempo em segundos'),
+        ])
 
         plt.tight_layout()
         plt.savefig(f'comp/{inst}_{inst_type}')
