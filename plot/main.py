@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import math
 import matplotlib.patches as mpatches
+import pylab as pl
 
 
 def load_data():
@@ -130,31 +131,35 @@ for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), 
         for impl in inst_data_impl:
             (n, m, name, actual_data) = impl
             df = pd.DataFrame.from_dict(actual_data)
-            data_nums.append((n, m, name, float(df.median())))
-
-        data_nums.sort()
-
-        data_names = [x[2] for x in data_nums]
+            data_nums.append((n, m, name, int(1e9 * float(df.min()))))
 
         if inst_type == 'array':
+            data_nums.sort(key=lambda x: x[0])
             data_ratio = [x[0] * x[0] for x in data_nums]
             complexidade = 'n²'
         else:
-            data_ratio = [x[1] * math.log(x[0]) for x in data_nums]
+            data_nums.sort(key=lambda x: x[1] * math.log2(x[0]))
+            data_ratio = [x[1] * math.log2(x[0]) for x in data_nums]
             complexidade = 'm log n'
+
+        data_names = [f'{x[2]}\nn: {x[0]}\nm:{x[1]}' for x in data_nums]
 
         data_data = [x[3] for x in data_nums]
         data_df = pd.DataFrame({'inst': data_names, 'expected': data_ratio, 'actual': data_data})
 
-        data_df['ratio'] = data_df.expected / data_df.actual
+        print(data_df)
+        print()
 
-        ax = data_df.plot(figsize=(19.2, 10.8), x='inst', y='expected', logy=True, fontsize=20,
+        ax = data_df.plot(figsize=(19.2, 10.8), x='inst', y='expected', logy=True, fontsize=16,
                           linewidth=7, color='#FF7F0E', legend=False)
+
         ax.set_ylabel(f'Complexidade {complexidade}', fontdict={'size': 24})
+        # ax.set_xlabel('Nome da instância / Quantidade de vértices', fontdict={'size': 24})
         ax.set_xlabel(None)
 
-        ax = data_df.actual.plot(x='inst', logy=True, secondary_y=True, rot=45, fontsize=20, linewidth=7,
+        ax = data_df.actual.plot(x='inst', logy=True, secondary_y=True, rot=75, fontsize=16, linewidth=7,
                                  color='#1F77B4')
+
         ax.set_ylabel('Tempo em segundos', fontdict={'size': 24})
 
         plt.title(f'Comparação tempo real e complexidade teórica\n{inst_name} com {inst_type}\n',
@@ -164,6 +169,8 @@ for (inst, inst_name) in [('alue', 'ALUE'), ('alut', 'ALUT'), ('dmxa', 'DMXA'), 
             mpatches.Patch(color='#FF7F0E', label=f'Complexidade {complexidade}'),
             mpatches.Patch(color='#1F77B4', label='Tempo em segundos'),
         ])
+
+        plt.xticks(data_df.index, data_df['inst'], rotation=75, fontsize=10)
 
         plt.tight_layout()
         plt.savefig(f'comp/{inst}_{inst_type}')

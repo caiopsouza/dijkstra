@@ -84,6 +84,9 @@ void GRAPH_delete(Graph *self) {
     for (size_t i = 0; i < graph->vertices; i++)
         LL_delete(&graph->adjacency[i]);
 
+#ifndef NO_FREE
     free(graph);
+#endif
+
     *self = NULL;
 }

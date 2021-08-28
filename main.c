@@ -81,8 +81,8 @@ static Instance instances[] = {
 
 int main() {
     bool print_result = false;
-    size_t warmup_amount = 10;
-    size_t measure_amount = 20;
+    size_t warmup_amount = 0;
+    size_t measure_amount = 50;
 
     for (size_t i = 0;; i++) {
         Instance instance = instances[i];

@@ -11,6 +11,15 @@ void benchmark(
         bool print_result,
         size_t warmup_amount,
         size_t measure_amount
-);
+        );
+
+void benchmark2(
+        char *name,
+        Graph graph,
+        void (*dijkstra)(Graph, size_t[]),
+        bool print_result,
+        size_t warmup_amount,
+        size_t measure_amount
+        );
 
 #endif //DIJKSTRA_BENCHMARK_H
